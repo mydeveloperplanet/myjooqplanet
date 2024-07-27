@@ -23,7 +23,7 @@ class MyJooqPlanetApplicationTests {
 	static PostgreSQLContainer<?> postgreSQLContainer =  new PostgreSQLContainer<>(DockerImageName.parse("postgres:15-alpine"));
 
 	@Test
-	void whenCreateCustomer_thenReturnSuccess() throws Exception {
+	void whenCreateCustomer_thenReturnSuccess() {
 		String body = """
                 {
                   "firstName": "John",
@@ -44,7 +44,7 @@ class MyJooqPlanetApplicationTests {
 	}
 
 	@Test
-	void givenCustomer_whenRetrieveAllCustomers_thenReturnSuccess() throws Exception {
+	void givenCustomer_whenRetrieveAllCustomers_thenReturnSuccess() {
 		String body = """
                 {
                   "firstName": "John",
