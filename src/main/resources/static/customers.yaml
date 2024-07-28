@@ -60,7 +60,81 @@ paths:
                 $ref: '#/components/schemas/CustomerFullData'
         '404':
           description: NOT FOUND
-
+  /orders:
+    post:
+      tags:
+        - Order
+      summary: Create Order
+      operationId: createOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: OK
+  /orders/{orderId}:
+    get:
+      tags:
+        - Order
+      summary: Retrieve Order
+      operationId: getOrder
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/OrderFullData'
+        '404':
+          description: NOT FOUND
+  /orders/customers/{customerId}:
+    get:
+      tags:
+        - Order
+      summary: Retrieve Order of Customer
+      operationId: getOrdersOfCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  type: integer
+                  format: int64
+        '404':
+          description: NOT FOUND
+  /articles:
+    post:
+      tags:
+        - Article
+      summary: Create Article
+      operationId: createArticle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     Customer:
@@ -69,18 +143,18 @@ components:
         firstName:
           type: string
           description: First name of the customer
-          minLength: 1
-          maxLength: 20
         lastName:
           type: string
           description: Last name of the customer
-          minLength: 1
-          maxLength: 20
+        street:
+          type: string
+          description: Street of the customer
+        city:
+          type: string
+          description: City of the customer
         country:
           type: string
           description: Country of the customer
-          minLength: 1
-          maxLength: 20
     CustomerFullData:
       allOf:
         - $ref: '#/components/schemas/Customer'
@@ -91,3 +165,41 @@ components:
               description: The ID of the customer
               format: int64
       description: Full data of the customer.
+    Order:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          description: The ID of the customer
+        articles:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderArticle'
+    OrderFullData:
+      allOf:
+        - $ref: '#/components/schemas/Order'
+        - type: object
+          properties:
+            orderId:
+              type: integer
+              description: The ID of the order
+              format: int64
+      description: Full data of the order.
+    OrderArticle:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          description: The ID of the article
+        number:
+          type: integer
+          description: The number of articles to order
+    Article:
+      type: object
+      properties:
+        articleId:
+          type: integer
+          description: The ID of the article
+        name:
+          type: string
+          description: The name of the article
