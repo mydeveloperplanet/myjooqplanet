@@ -1,13 +1,13 @@
 package com.mydeveloperplanet.myjooqplanet;
 
-import static com.mydeveloperplanet.myjooqplanet.jooq.tables.Customer.*;
+import static com.mydeveloperplanet.myjooqplanet.jooq.tables.Customer.CUSTOMER;
 
 import java.util.List;
 
 import com.mydeveloperplanet.myjooqplanet.jooq.tables.records.CustomerRecord;
 
 import org.jooq.DSLContext;
-import org.jooq.Result;
+import org.jooq.Records;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -26,14 +26,12 @@ public class CustomerRepository {
     }
 
     public CustomerRecord getCustomer(int customerId) {
-        Result<?> result = create.select().from(CUSTOMER).where(CUSTOMER.ID.eq(customerId)).fetch();
-        return (CustomerRecord) result.getFirst();
+        return create.selectFrom(CUSTOMER).where(CUSTOMER.ID.eq(customerId)).fetchOne(Records.mapping(CustomerRecord::new));
     }
 
     public List<CustomerRecord> getAllCustomers() {
-        Result<CustomerRecord> records = create.selectFrom(CUSTOMER)
-                .fetch();
-        return records.stream().toList();
+        return create.selectFrom(CUSTOMER)
+                .fetch(Records.mapping(CustomerRecord::new));
     }
 
 }
