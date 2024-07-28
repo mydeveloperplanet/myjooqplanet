@@ -20,14 +20,14 @@ public class AddressRepository {
 
     public void addAddress(AddressIn addressIn, Integer customerId) {
         create
-                .insertInto(ADDRESS, ADDRESS.STREET, ADDRESS.CITY, ADDRESS.CUSTOMER_ID)
-                .values(addressIn.street(), addressIn.city(), customerId)
+                .insertInto(ADDRESS, ADDRESS.STREET, ADDRESS.CITY, ADDRESS.COUNTRY, ADDRESS.CUSTOMER_ID)
+                .values(addressIn.street(), addressIn.city(), addressIn.country(), customerId)
                 .execute();
     }
 
     public AddressOut getAddressByCustomer(int customerId) {
         return create
-                .select(ADDRESS.STREET, ADDRESS.CITY)
+                .select(ADDRESS.STREET, ADDRESS.CITY, ADDRESS.COUNTRY)
                 .from(ADDRESS)
                 .where(ADDRESS.CUSTOMER_ID.eq(customerId))
                 .fetchOne(Records.mapping(AddressOut::new));

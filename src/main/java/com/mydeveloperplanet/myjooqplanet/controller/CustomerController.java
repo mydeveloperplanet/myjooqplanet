@@ -28,10 +28,10 @@ public class CustomerController implements CustomersApi {
 
     @Override
     public ResponseEntity<Void> createCustomer(com.mydeveloperplanet.myjooqplanet.model.Customer apiCustomer) {
-        CustomerIn customerIn = new CustomerIn(apiCustomer.getFirstName(), apiCustomer.getLastName(), apiCustomer.getCountry());
+        CustomerIn customerIn = new CustomerIn(apiCustomer.getFirstName(), apiCustomer.getLastName());
         Integer customerId = customerRepository.addCustomer(customerIn);
 
-        AddressIn addressIn = new AddressIn(apiCustomer.getStreet(), apiCustomer.getCity());
+        AddressIn addressIn = new AddressIn(apiCustomer.getStreet(), apiCustomer.getCity(), apiCustomer.getCountry());
         addressRepository.addAddress(addressIn, customerId);
 
         return ResponseEntity.ok().build();
@@ -66,9 +66,9 @@ public class CustomerController implements CustomersApi {
         cfd.setCustomerId(customer.id().longValue());
         cfd.setFirstName(customer.firstName());
         cfd.setLastName(customer.lastName());
-        cfd.setCountry(customer.country());
         cfd.setStreet(address.street());
         cfd.setCity(address.city());
+        cfd.setCountry(address.country());
         return cfd;
     }
 

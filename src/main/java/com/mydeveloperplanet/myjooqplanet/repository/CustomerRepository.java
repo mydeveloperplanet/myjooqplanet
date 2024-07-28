@@ -22,8 +22,8 @@ public class CustomerRepository {
 
     public Integer addCustomer(CustomerIn customerIn) {
         return create
-                .insertInto(CUSTOMER, CUSTOMER.FIRST_NAME, CUSTOMER.LAST_NAME, CUSTOMER.COUNTRY)
-                .values(customerIn.firstName(), customerIn.lastName(), customerIn.country())
+                .insertInto(CUSTOMER, CUSTOMER.FIRST_NAME, CUSTOMER.LAST_NAME)
+                .values(customerIn.firstName(), customerIn.lastName())
                 .returningResult(CUSTOMER.ID)
                 .fetchOne(Records.mapping(value -> value));
     }

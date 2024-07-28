@@ -17,7 +17,6 @@
       <column name="last_name" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
-      <column name="country" type="varchar(255)"/>
     </createTable>
 
     <createTable tableName="address">
@@ -26,6 +25,7 @@
       </column>
       <column name="street" type="varchar(255)" />
       <column name="city" type="varchar(255)" />
+      <column name="country" type="varchar(255)"/>
       <column name="customer_id" type="serial">
         <constraints foreignKeyName="address_customer_fk" referencedTableName="customer" referencedColumnNames="id"/>
       </column>
