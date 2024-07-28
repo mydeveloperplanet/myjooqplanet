@@ -1,0 +1,44 @@
+@startuml
+skinparam linetype ortho
+
+entity "customer" {
+    * id
+    --
+    * first_name
+    * last_name
+}
+
+entity "address" {
+    * id
+    --
+    street
+    city
+    country
+    customer_id <<FK>>
+}
+
+entity "order" {
+    * id
+    --
+    customer_id <<FK>>
+}
+
+entity "article" {
+    * id
+    --
+    name
+}
+
+entity "order_article" {
+    * order_id <<FK>>
+    * article_id <<FK>>
+    --
+    number
+}
+
+"customer" |o--o| "address"
+"order" }o--|| "customer"
+"order_article" }o--|| "article"
+"order_article" }o--|| "order"
+
+@enduml
