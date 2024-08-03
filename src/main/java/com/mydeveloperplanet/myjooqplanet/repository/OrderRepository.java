@@ -36,9 +36,9 @@ public class OrderRepository {
     public void addArticles(Integer orderId, List<OrderArticleIn> articles) {
         for (OrderArticleIn orderArticle : articles) {
             create
-                    .insertInto(ORDER_ARTICLE, ORDER_ARTICLE.ORDER_ID, ORDER_ARTICLE.ARTICLE_ID, ORDER_ARTICLE.NUMBER)
-                    .values(orderId, orderArticle.articleId(), orderArticle.number())
-                    .execute();
+                .insertInto(ORDER_ARTICLE, ORDER_ARTICLE.ORDER_ID, ORDER_ARTICLE.ARTICLE_ID, ORDER_ARTICLE.NUMBER)
+                .values(orderId, orderArticle.articleId(), orderArticle.number())
+                .execute();
         }
     }
 
